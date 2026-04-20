@@ -10,14 +10,46 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 // ─── DOM Ready ───────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  initSplash();
   initNav();
   initScrollAnimations();
   initLocationCards();
   initQuiz();
   initForms();
   initMobileNav();
+  initHeroMedia();
   initHeroAnimations();
 });
+
+// ═══════════════════════════════════════════
+// SPLASH SCREEN — zoom-in logo, 2s, then dismiss
+// ═══════════════════════════════════════════
+function initSplash() {
+  const splash = document.getElementById('splash-screen');
+  const logo   = splash ? splash.querySelector('.splash-logo') : null;
+  if (!splash || !logo) return;
+
+  // Prevent scroll while splash is visible
+  document.body.style.overflow = 'hidden';
+
+  const tl = gsap.timeline({
+    onComplete: () => {
+      document.body.style.overflow = '';
+      splash.classList.add('splash-hidden');
+    }
+  });
+
+  // Start small + invisible, zoom smoothly to full size in 2 s
+  tl.fromTo(logo,
+    { scale: 0.35, opacity: 0 },
+    { scale: 1, opacity: 1, duration: 2, ease: 'power3.out' }
+  )
+  // Brief pause at full size, then fade the whole screen out
+  .to(splash,
+    { opacity: 0, duration: 0.55, ease: 'power2.inOut' },
+    '+=0.25'
+  );
+}
 
 // ═══════════════════════════════════════════
 // NAV — sticky scroll + active section + smooth scroll
@@ -26,6 +58,15 @@ function initNav() {
   const header = document.getElementById('site-header');
   const navLinks = document.querySelectorAll('.nav-link[data-section]');
   const sections = document.querySelectorAll('section[id]');
+  const navHeight = () => {
+    const cssVar = getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim();
+    return Number(cssVar.replace('px', '')) || 80;
+  };
+
+  // Keep nav styling persistent from initial paint
+  if (header) {
+    header.classList.add('scrolled');
+  }
 
   // Scroll → add class
   ScrollTrigger.create({
@@ -43,7 +84,7 @@ function initNav() {
       e.preventDefault();
       gsap.to(window, {
         duration: 1.1,
-        scrollTo: { y: target, offsetY: 76 },
+        scrollTo: { y: target, offsetY: navHeight() },
         ease: 'power3.inOut'
       });
       // Close mobile nav
@@ -64,7 +105,7 @@ function initNav() {
         });
       }
     });
-  }, { threshold: 0.3, rootMargin: '-80px 0px -40% 0px' });
+  }, { threshold: 0.3, rootMargin: `-${navHeight()}px 0px -40% 0px` });
 
   sections.forEach(s => observer.observe(s));
 }
@@ -109,6 +150,47 @@ function initHeroAnimations() {
     .from('.hero-sub', { opacity: 0, y: 24, duration: 0.8 }, '-=0.7')
     .from('.btn-hero', { opacity: 0, y: 20, duration: 0.7 }, '-=0.5')
     .from('.scroll-cue', { opacity: 0, duration: 0.5 }, '-=0.2');
+}
+
+// ═══════════════════════════════════════════
+// HERO VIDEO — lazy start + fallback handling
+// ═══════════════════════════════════════════
+function initHeroMedia() {
+  const heroVideo = document.querySelector('.hero-video');
+  const heroVideoWrap = document.querySelector('.hero-video-wrap');
+  const heroFallback = document.querySelector('.hero-video-fallback');
+
+  if (!heroVideo || !heroVideoWrap || !heroFallback) return;
+
+  const showFallback = () => heroVideoWrap.classList.remove('media-ready');
+  const showVideo = () => heroVideoWrap.classList.add('media-ready');
+
+  heroVideo.muted = true;
+  heroVideo.setAttribute('muted', '');
+  heroVideo.setAttribute('playsinline', '');
+  heroVideo.preload = 'auto';
+
+  const tryPlay = () => {
+    const playPromise = heroVideo.play();
+    if (playPromise && typeof playPromise.then === 'function') {
+      playPromise.then(() => {
+        showVideo();
+      }).catch(() => {
+        showFallback();
+      });
+    } else {
+      showFallback();
+    }
+  };
+
+  if (heroVideo.readyState >= 3) {
+    tryPlay();
+  } else {
+    heroVideo.addEventListener('canplay', tryPlay, { once: true });
+  }
+
+  heroVideo.addEventListener('playing', showVideo, { once: true });
+  heroVideo.addEventListener('error', showFallback, { once: true });
 }
 
 // ═══════════════════════════════════════════
