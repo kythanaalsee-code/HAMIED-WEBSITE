@@ -16,8 +16,10 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Flip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=4" />
 </head>
 <body>
 
@@ -180,98 +182,127 @@
       </div>
 
       <div class="services-grid">
+
         <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="24" cy="24" r="20" fill="var(--color-pink-light)"/>
-              <path d="M24 14c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10z" stroke="var(--color-violet)" stroke-width="2" fill="none"/>
-              <path d="M24 20v4l3 3" stroke="var(--color-violet)" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+          <div class="service-card-photo" style="background-image: url('https://picsum.photos/seed/24uurszorg/600/400')"></div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">24-uurszorg</h3>
+            <p class="service-card-desc">Professionele verpleging en verzorging rondom de klok voor bewoners die continue ondersteuning nodig hebben.</p>
+            <div class="service-card-tags">
+              <span class="service-tag">Verpleging</span>
+              <span class="service-tag">24/7 Zorg</span>
+            </div>
           </div>
-          <h3>24-uurszorg</h3>
-          <p>Professionele verpleging en verzorging rondom de klok voor bewoners die continue ondersteuning nodig hebben.</p>
+          <div class="service-card-footer">
+            <a href="#contact" class="btn-service">Meer informatie</a>
+          </div>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="24" cy="24" r="20" fill="var(--color-purple-light)"/>
-              <path d="M16 28s2-4 8-4 8 4 8 4" stroke="var(--color-violet)" stroke-width="2" stroke-linecap="round"/>
-              <circle cx="24" cy="19" r="4" stroke="var(--color-violet)" stroke-width="2" fill="none"/>
-            </svg>
+          <div class="service-card-photo" style="background-image: url('https://picsum.photos/seed/palliatieve/600/400')"></div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">Palliatieve zorg</h3>
+            <p class="service-card-desc">Liefdevolle begeleiding in de laatste levensfase, gericht op comfort, waardigheid en geborgenheid.</p>
+            <div class="service-card-tags">
+              <span class="service-tag">Palliatief</span>
+              <span class="service-tag">Begeleiding</span>
+            </div>
           </div>
-          <h3>Palliatieve zorg</h3>
-          <p>Liefdevolle begeleiding in de laatste levensfase, gericht op comfort, waardigheid en geborgenheid.</p>
+          <div class="service-card-footer">
+            <a href="#contact" class="btn-service">Meer informatie</a>
+          </div>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="24" cy="24" r="20" fill="var(--color-pink-light)"/>
-              <rect x="16" y="20" width="16" height="12" rx="2" stroke="var(--color-violet)" stroke-width="2" fill="none"/>
-              <path d="M20 20v-2a4 4 0 018 0v2" stroke="var(--color-violet)" stroke-width="2"/>
-            </svg>
+          <div class="service-card-photo" style="background-image: url('https://picsum.photos/seed/dagopvang/600/400')"></div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">Dagopvang</h3>
+            <p class="service-card-desc">Dagelijkse activiteiten, sociale contacten en begeleiding voor ouderen die thuis wonen.</p>
+            <div class="service-card-tags">
+              <span class="service-tag">Dagelijks</span>
+              <span class="service-tag">Sociaal</span>
+            </div>
           </div>
-          <h3>Dagopvang</h3>
-          <p>Dagelijkse activiteiten, sociale contacten en begeleiding voor ouderen die thuis wonen.</p>
+          <div class="service-card-footer">
+            <a href="#contact" class="btn-service">Meer informatie</a>
+          </div>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="24" cy="24" r="20" fill="var(--color-purple-light)"/>
-              <path d="M24 16v8l4 4" stroke="var(--color-violet)" stroke-width="2" stroke-linecap="round"/>
-              <path d="M14 34c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="var(--color-violet)" stroke-width="2" stroke-linecap="round" fill="none"/>
-            </svg>
+          <div class="service-card-photo" style="background-image: url('https://picsum.photos/seed/thuiszorg/600/400')"></div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">Thuiszorg</h3>
+            <p class="service-card-desc">Ondersteuning bij dagelijkse activiteiten in de vertrouwde thuisomgeving van de cliënt.</p>
+            <div class="service-card-tags">
+              <span class="service-tag">Thuis</span>
+              <span class="service-tag">Persoonlijk</span>
+            </div>
           </div>
-          <h3>Thuiszorg</h3>
-          <p>Ondersteuning bij dagelijkse activiteiten in de vertrouwde thuisomgeving van de cliënt.</p>
+          <div class="service-card-footer">
+            <a href="#contact" class="btn-service">Meer informatie</a>
+          </div>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="24" cy="24" r="20" fill="var(--color-pink-light)"/>
-              <path d="M20 24h8M24 20v8" stroke="var(--color-violet)" stroke-width="2.5" stroke-linecap="round"/>
-              <rect x="14" y="16" width="20" height="16" rx="3" stroke="var(--color-violet)" stroke-width="2" fill="none"/>
-            </svg>
+          <div class="service-card-photo" style="background-image: url('https://picsum.photos/seed/medisch/600/400')"></div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">Medische ondersteuning</h3>
+            <p class="service-card-desc">Samenwerking met artsen en specialisten voor medische begeleiding en behandeling op locatie.</p>
+            <div class="service-card-tags">
+              <span class="service-tag">Medisch</span>
+              <span class="service-tag">Op locatie</span>
+            </div>
           </div>
-          <h3>Medische ondersteuning</h3>
-          <p>Samenwerking met artsen en specialisten voor medische begeleiding en behandeling op locatie.</p>
+          <div class="service-card-footer">
+            <a href="#contact" class="btn-service">Meer informatie</a>
+          </div>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="24" cy="24" r="20" fill="var(--color-purple-light)"/>
-              <path d="M18 26l4 4 8-10" stroke="var(--color-violet)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+          <div class="service-card-photo" style="background-image: url('https://picsum.photos/seed/revalidatie/600/400')"></div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">Revalidatie</h3>
+            <p class="service-card-desc">Fysiotherapie en revalidatieprogramma's om mobiliteit en zelfstandigheid te bevorderen.</p>
+            <div class="service-card-tags">
+              <span class="service-tag">Fysiotherapie</span>
+              <span class="service-tag">Mobiliteit</span>
+            </div>
           </div>
-          <h3>Revalidatie</h3>
-          <p>Fysiotherapie en revalidatieprogramma's om mobiliteit en zelfstandigheid te bevorderen.</p>
+          <div class="service-card-footer">
+            <a href="#contact" class="btn-service">Meer informatie</a>
+          </div>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="24" cy="24" r="20" fill="var(--color-pink-light)"/>
-              <path d="M24 14c-5.5 3-8 7-8 10a8 8 0 0016 0c0-3-2.5-7-8-10z" stroke="var(--color-violet)" stroke-width="2" fill="none"/>
-            </svg>
+          <div class="service-card-photo" style="background-image: url('https://picsum.photos/seed/psychosociaal/600/400')"></div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">Psychosociale begeleiding</h3>
+            <p class="service-card-desc">Emotionele ondersteuning en psychologische zorg voor bewoners en hun families.</p>
+            <div class="service-card-tags">
+              <span class="service-tag">Emotioneel</span>
+              <span class="service-tag">Familie</span>
+            </div>
           </div>
-          <h3>Psychosociale begeleiding</h3>
-          <p>Emotionele ondersteuning en psychologische zorg voor bewoners en hun families.</p>
+          <div class="service-card-footer">
+            <a href="#contact" class="btn-service">Meer informatie</a>
+          </div>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="24" cy="24" r="20" fill="var(--color-purple-light)"/>
-              <path d="M17 24h14M17 19h14M17 29h8" stroke="var(--color-violet)" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+          <div class="service-card-photo" style="background-image: url('https://picsum.photos/seed/activiteiten/600/400')"></div>
+          <div class="service-card-body">
+            <h3 class="service-card-title">Activiteitenprogramma</h3>
+            <p class="service-card-desc">Dagelijkse activiteiten, uitstapjes en culturele evenementen voor een actief en zinvol leven.</p>
+            <div class="service-card-tags">
+              <span class="service-tag">Activiteiten</span>
+              <span class="service-tag">Cultureel</span>
+            </div>
           </div>
-          <h3>Activiteitenprogramma</h3>
-          <p>Dagelijkse activiteiten, uitstapjes en culturele evenementen voor een actief en zinvol leven.</p>
+          <div class="service-card-footer">
+            <a href="#contact" class="btn-service">Meer informatie</a>
+          </div>
         </div>
+
       </div>
     </section>
 
@@ -549,104 +580,208 @@
     <!-- ═══════════════════════════════════════════
          JOIN OUR TEAM SECTION
     ═══════════════════════════════════════════ -->
-    <section id="join-team" class="section team-section">
+    <section id="join-team" class="section team-section" aria-label="Word collega bij Stichting Hamiëd">
+      <!-- Blurred background image layer -->
+      <div class="team-bg" aria-hidden="true">
+        <div class="team-bg-image" style="background-image: url('https://picsum.photos/seed/hamiedteam/1920/1200')"></div>
+        <div class="team-bg-overlay"></div>
+      </div>
+
       <div class="section-header">
         <p class="section-eyebrow">Kom bij ons team</p>
         <h2 class="section-title">Word collega bij<br/>Stichting Hamiëd</h2>
         <p class="section-desc">Wij zijn altijd op zoek naar gepassioneerde, zorgzame mensen die een verschil willen maken in het leven van onze bewoners.</p>
       </div>
 
-      <!-- Job listings -->
-      <div class="jobs-grid" id="jobs-grid">
-        <div class="job-card">
-          <div class="job-badge">Nieuw</div>
-          <h3 class="job-title">Verpleegkundige (MBO/HBO)</h3>
-          <p class="job-location">📍 Alle locaties</p>
-          <p class="job-type">⏰ Voltijd / Deeltijd</p>
-          <p class="job-desc">Wij zoeken enthousiaste verpleegkundigen die met hart en ziel zorgen voor onze bewoners. Ervaring in ouderenzorg is een pre.</p>
-          <button class="btn btn-outline job-apply-btn" data-job="Verpleegkundige (MBO/HBO)">Solliciteer nu</button>
+      <!-- Carousel header: badge + counter -->
+      <div class="carousel-header">
+        <div class="carousel-badge-slot" aria-live="polite">
+          <span class="carousel-badge" id="carousel-badge" hidden></span>
         </div>
-
-        <div class="job-card">
-          <h3 class="job-title">Verzorgende (IG)</h3>
-          <p class="job-location">📍 Willemstad & Barber</p>
-          <p class="job-type">⏰ Voltijd</p>
-          <p class="job-desc">Als verzorgende bied je persoonlijke zorg en ondersteuning aan bewoners in hun dagelijks leven, met aandacht voor hun welzijn.</p>
-          <button class="btn btn-outline job-apply-btn" data-job="Verzorgende (IG)">Solliciteer nu</button>
-        </div>
-
-        <div class="job-card">
-          <div class="job-badge">Urgent</div>
-          <h3 class="job-title">Activiteitenbegeleider</h3>
-          <p class="job-location">📍 Soto & Damacor</p>
-          <p class="job-type">⏰ Deeltijd</p>
-          <p class="job-desc">Organiseer en begeleid creatieve en sociale activiteiten voor onze bewoners. Affiniteit met kunst, muziek of beweging is een pluspunt.</p>
-          <button class="btn btn-outline job-apply-btn" data-job="Activiteitenbegeleider">Solliciteer nu</button>
-        </div>
-
-        <div class="job-card">
-          <h3 class="job-title">Huishoudelijke medewerker</h3>
-          <p class="job-location">📍 Alle locaties</p>
-          <p class="job-type">⏰ Deeltijd</p>
-          <p class="job-desc">Zorg voor een schone, hygiënische en gezellige leefomgeving. Jouw werk maakt direct verschil voor het wooncomfort van onze bewoners.</p>
-          <button class="btn btn-outline job-apply-btn" data-job="Huishoudelijke medewerker">Solliciteer nu</button>
-        </div>
-
-        <div class="job-card">
-          <h3 class="job-title">Nachtzuster / Nachtverzorger</h3>
-          <p class="job-location">📍 Alle locaties</p>
-          <p class="job-type">⏰ Nachtdienst</p>
-          <p class="job-desc">Voor de nachtdienst zoeken wij ervaren verpleegkundigen of verzorgenden die zelfstandig kunnen werken en rustig en betrouwbaar zijn.</p>
-          <button class="btn btn-outline job-apply-btn" data-job="Nachtzuster / Nachtverzorger">Solliciteer nu</button>
-        </div>
-
-        <div class="job-card">
-          <h3 class="job-title">Stagiaire Zorg & Welzijn</h3>
-          <p class="job-location">📍 Alle locaties</p>
-          <p class="job-type">⏰ Stage (MBO/HBO)</p>
-          <p class="job-desc">Loop stage bij Stichting Hamiëd en doe waardevolle praktijkervaring op in de ouderenzorg en palliatieve zorg.</p>
-          <button class="btn btn-outline job-apply-btn" data-job="Stagiaire Zorg & Welzijn">Solliciteer nu</button>
-        </div>
+        <div class="carousel-counter" id="carousel-counter" aria-live="polite">1 / 6</div>
       </div>
 
-      <!-- Application form -->
-      <div class="apply-form-wrap" id="apply-form-wrap">
-        <h3>Solliciteer direct <span id="apply-job-name"></span></h3>
-        <p>Stuur uw sollicitatie inclusief CV rechtstreeks naar onze HR-afdeling.</p>
-        <form class="apply-form" id="apply-form" novalidate>
-          <input type="hidden" id="apply-position" name="position" />
-          <div class="form-row">
-            <div class="form-group">
-              <label for="af-name">Naam *</label>
-              <input type="text" id="af-name" name="name" required placeholder="Uw volledige naam" />
+      <!-- Carousel -->
+      <div
+        class="job-carousel"
+        id="job-carousel"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Open vacatures"
+        tabindex="0"
+      >
+        <!-- Live region announces centered job -->
+        <div class="sr-only" aria-live="polite" id="carousel-live"></div>
+
+        <button class="carousel-nav carousel-nav-prev" id="carousel-prev" aria-label="Vorige vacature" type="button">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+
+        <div class="carousel-track" id="carousel-track">
+          <!-- Job 1 -->
+          <article class="job-card" data-index="0" data-job="Verpleegkundige (MBO/HBO)" data-badge="Nieuw" aria-roledescription="slide" aria-label="Verpleegkundige (MBO/HBO)">
+            <div class="job-card-inner">
+              <div class="job-card-face job-card-front">
+                <div class="job-card-photo" style="background-image: url('https://picsum.photos/seed/verpleegkundige/600/900')"></div>
+                <div class="job-card-gradient"></div>
+                <div class="job-card-content">
+                  <h3 class="job-card-title">Verpleegkundige <span>(MBO/HBO)</span></h3>
+                  <p class="job-card-desc">Wij zoeken enthousiaste verpleegkundigen die met hart en ziel zorgen voor onze bewoners.</p>
+                  <button class="btn-glass job-apply-btn" type="button" data-job="Verpleegkundige (MBO/HBO)">Solliciteer nu</button>
+                </div>
+              </div>
+              <div class="job-card-face job-card-back" aria-hidden="true"></div>
             </div>
-            <div class="form-group">
-              <label for="af-email">E-mail *</label>
-              <input type="email" id="af-email" name="email" required placeholder="uw@email.com" />
+          </article>
+
+          <!-- Job 2 -->
+          <article class="job-card" data-index="1" data-job="Verzorgende (IG)" aria-roledescription="slide" aria-label="Verzorgende (IG)">
+            <div class="job-card-inner">
+              <div class="job-card-face job-card-front">
+                <div class="job-card-photo" style="background-image: url('https://picsum.photos/seed/verzorgende/600/900')"></div>
+                <div class="job-card-gradient"></div>
+                <div class="job-card-content">
+                  <h3 class="job-card-title">Verzorgende <span>(IG)</span></h3>
+                  <p class="job-card-desc">Persoonlijke zorg en ondersteuning aan bewoners in hun dagelijks leven.</p>
+                  <button class="btn-glass job-apply-btn" type="button" data-job="Verzorgende (IG)">Solliciteer nu</button>
+                </div>
+              </div>
+              <div class="job-card-face job-card-back" aria-hidden="true"></div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="af-phone">Telefoon</label>
-            <input type="tel" id="af-phone" name="phone" placeholder="+599 9 xxx xxxx" />
-          </div>
-          <div class="form-group">
-            <label for="af-motivation">Motivatiebrief *</label>
-            <textarea id="af-motivation" name="motivation" rows="6" required placeholder="Waarom wilt u bij Stichting Hamiëd werken?"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="af-cv" class="file-label">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-              CV toevoegen (PDF, DOC, DOCX) *
-            </label>
-            <input type="file" id="af-cv" name="cv" accept=".pdf,.doc,.docx" required class="sr-only" />
-            <p class="file-selected" id="file-selected">Geen bestand gekozen</p>
-          </div>
-          <button type="submit" class="btn btn-primary">
-            Verstuur sollicitatie naar HR
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+          </article>
+
+          <!-- Job 3 -->
+          <article class="job-card" data-index="2" data-job="Activiteitenbegeleider" data-badge="Urgent" aria-roledescription="slide" aria-label="Activiteitenbegeleider">
+            <div class="job-card-inner">
+              <div class="job-card-face job-card-front">
+                <div class="job-card-photo" style="background-image: url('https://picsum.photos/seed/activiteitenbegeleider/600/900')"></div>
+                <div class="job-card-gradient"></div>
+                <div class="job-card-content">
+                  <h3 class="job-card-title">Activiteitenbegeleider</h3>
+                  <p class="job-card-desc">Organiseer creatieve en sociale activiteiten voor onze bewoners.</p>
+                  <button class="btn-glass job-apply-btn" type="button" data-job="Activiteitenbegeleider">Solliciteer nu</button>
+                </div>
+              </div>
+              <div class="job-card-face job-card-back" aria-hidden="true"></div>
+            </div>
+          </article>
+
+          <!-- Job 4 -->
+          <article class="job-card" data-index="3" data-job="Huishoudelijke medewerker" aria-roledescription="slide" aria-label="Huishoudelijke medewerker">
+            <div class="job-card-inner">
+              <div class="job-card-face job-card-front">
+                <div class="job-card-photo" style="background-image: url('https://picsum.photos/seed/huishoudelijke/600/900')"></div>
+                <div class="job-card-gradient"></div>
+                <div class="job-card-content">
+                  <h3 class="job-card-title">Huishoudelijke<br/>medewerker</h3>
+                  <p class="job-card-desc">Zorg voor een schone en gezellige leefomgeving voor onze bewoners.</p>
+                  <button class="btn-glass job-apply-btn" type="button" data-job="Huishoudelijke medewerker">Solliciteer nu</button>
+                </div>
+              </div>
+              <div class="job-card-face job-card-back" aria-hidden="true"></div>
+            </div>
+          </article>
+
+          <!-- Job 5 -->
+          <article class="job-card" data-index="4" data-job="Nachtzuster / Nachtverzorger" aria-roledescription="slide" aria-label="Nachtzuster / Nachtverzorger">
+            <div class="job-card-inner">
+              <div class="job-card-face job-card-front">
+                <div class="job-card-photo" style="background-image: url('https://picsum.photos/seed/nachtzuster/600/900')"></div>
+                <div class="job-card-gradient"></div>
+                <div class="job-card-content">
+                  <h3 class="job-card-title">Nachtzuster<br/><span>Nachtverzorger</span></h3>
+                  <p class="job-card-desc">Ervaren professionals voor de nachtdienst, zelfstandig en betrouwbaar.</p>
+                  <button class="btn-glass job-apply-btn" type="button" data-job="Nachtzuster / Nachtverzorger">Solliciteer nu</button>
+                </div>
+              </div>
+              <div class="job-card-face job-card-back" aria-hidden="true"></div>
+            </div>
+          </article>
+
+          <!-- Job 6 -->
+          <article class="job-card" data-index="5" data-job="Stagiaire Zorg & Welzijn" aria-roledescription="slide" aria-label="Stagiaire Zorg en Welzijn">
+            <div class="job-card-inner">
+              <div class="job-card-face job-card-front">
+                <div class="job-card-photo" style="background-image: url('https://picsum.photos/seed/stagiaire/600/900')"></div>
+                <div class="job-card-gradient"></div>
+                <div class="job-card-content">
+                  <h3 class="job-card-title">Stagiaire <span>Zorg &amp; Welzijn</span></h3>
+                  <p class="job-card-desc">Loop stage bij Stichting Hamiëd en doe waardevolle praktijkervaring op.</p>
+                  <button class="btn-glass job-apply-btn" type="button" data-job="Stagiaire Zorg & Welzijn">Solliciteer nu</button>
+                </div>
+              </div>
+              <div class="job-card-face job-card-back" aria-hidden="true"></div>
+            </div>
+          </article>
+        </div>
+
+        <button class="carousel-nav carousel-nav-next" id="carousel-next" aria-label="Volgende vacature" type="button">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <!-- Apply modal (hidden until activated) -->
+      <div class="apply-modal" id="apply-modal" role="dialog" aria-modal="true" aria-labelledby="apply-modal-title" hidden>
+        <div class="apply-modal-backdrop" id="apply-modal-backdrop"></div>
+        <div class="apply-modal-card" id="apply-modal-card">
+          <button type="button" class="apply-modal-close" id="apply-modal-close" aria-label="Sluiten">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
           </button>
-          <p class="form-note">Uw sollicitatie wordt verstuurd naar: <strong>hr@hamied.cw</strong></p>
-        </form>
+
+          <div class="apply-modal-body">
+            <p class="apply-modal-eyebrow">Sollicitatie</p>
+            <h3 class="apply-modal-title" id="apply-modal-title">
+              Solliciteer direct <span id="apply-job-name"></span>
+            </h3>
+            <p class="apply-modal-sub">Stuur uw sollicitatie inclusief CV rechtstreeks naar onze HR-afdeling.</p>
+
+            <form class="apply-form" id="apply-form" novalidate>
+              <input type="hidden" id="apply-position" name="position" />
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="af-name">Naam *</label>
+                  <input type="text" id="af-name" name="name" required placeholder="Uw volledige naam" />
+                </div>
+                <div class="form-group">
+                  <label for="af-email">E-mail *</label>
+                  <input type="email" id="af-email" name="email" required placeholder="uw@email.com" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="af-phone">Telefoon</label>
+                <input type="tel" id="af-phone" name="phone" placeholder="+599 9 xxx xxxx" />
+              </div>
+              <div class="form-group">
+                <label for="af-motivation">Motivatiebrief *</label>
+                <textarea id="af-motivation" name="motivation" rows="4" required placeholder="Waarom wilt u bij Stichting Hamiëd werken?"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="af-cv" class="file-label">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                  CV toevoegen (PDF, DOC, DOCX) *
+                </label>
+                <input type="file" id="af-cv" name="cv" accept=".pdf,.doc,.docx" required class="sr-only" />
+                <p class="file-selected" id="file-selected">Geen bestand gekozen</p>
+              </div>
+              <button type="submit" class="btn btn-primary apply-modal-submit">
+                Verstuur sollicitatie
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+              </button>
+              <p class="form-note">Uw sollicitatie wordt verstuurd naar: <strong>hr@hamied.cw</strong></p>
+            </form>
+          </div>
+
+          <!-- Success state (overlays form) -->
+          <div class="apply-modal-success" id="apply-modal-success" hidden>
+            <div class="apply-success-inner">
+              <div class="apply-success-icon" aria-hidden="true">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <h3 class="apply-success-title">Bedankt!</h3>
+              <p class="apply-success-text">Uw sollicitatie is verstuurd.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -855,7 +990,7 @@
   <!-- Toast notification -->
   <div class="toast" id="toast" role="alert" aria-live="polite"></div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=3"></script>
 <script data-pplx-inline-edit>
 (function(){
   if(window===window.top)return;

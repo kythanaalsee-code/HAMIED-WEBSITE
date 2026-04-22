@@ -6,7 +6,15 @@
 'use strict';
 
 // ─── GSAP Registration ───────────────────────────────────────────────────────
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+gsap.registerPlugin(
+  ScrollTrigger,
+  ScrollToPlugin,
+  typeof Flip !== 'undefined' ? Flip : undefined,
+  typeof Draggable !== 'undefined' ? Draggable : undefined
+);
+
+// ─── Reduced motion preference (used across modules) ─────────────────────────
+const PREFERS_REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ─── DOM Ready ───────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLocationCards();
   initQuiz();
   initForms();
+  initJobCarousel();
   initMobileNav();
   initHeroMedia();
   initHeroAnimations();
@@ -217,15 +226,7 @@ function initScrollAnimations() {
     });
   }
 
-  // Job cards — stagger
-  const jobCards = gsap.utils.toArray('.job-card');
-  if (jobCards.length) {
-    gsap.from(jobCards, {
-      scrollTrigger: { trigger: '.jobs-grid', start: 'top 80%', once: true },
-      opacity: 0, y: 30, duration: 0.65, ease,
-      stagger: { amount: 0.45 }
-    });
-  }
+  // (Job carousel reveal is handled inside initJobCarousel)
 
   // Location cards — stagger from left
   const locCards = gsap.utils.toArray('.location-card');
@@ -291,14 +292,7 @@ function initScrollAnimations() {
     });
   }
 
-  // Apply form wrap
-  const applyForm = document.querySelector('.apply-form-wrap');
-  if (applyForm) {
-    gsap.from(applyForm, {
-      scrollTrigger: { trigger: applyForm, start: 'top 80%', once: true },
-      opacity: 0, y: 30, duration: 0.8, ease
-    });
-  }
+  // (Apply form is now inside the carousel modal; no reveal needed here)
 
   // Contact form wrap
   const contactForms = document.querySelectorAll('.contact-form-wrap, .contact-info-wrap');
@@ -491,43 +485,44 @@ function initForms() {
     });
   }
 
-  // Apply form (job applications)
+  // Apply form (job applications) — inside modal
   const applyForm = document.getElementById('apply-form');
   if (applyForm) {
     applyForm.addEventListener('submit', (e) => {
       e.preventDefault();
       if (!validateForm(applyForm)) return;
       showToast('Sollicitatie verstuurd naar hr@hamied.cw!', 'success');
-      applyForm.reset();
-      document.getElementById('file-selected').textContent = 'Geen bestand gekozen';
+
+      // Show in-card success state, then close modal back to carousel
+      const successEl = document.getElementById('apply-modal-success');
+      if (successEl) {
+        successEl.hidden = false;
+        // force reflow so the transition runs
+        // eslint-disable-next-line no-unused-expressions
+        successEl.offsetWidth;
+        successEl.classList.add('show');
+      }
+
+      setTimeout(() => {
+        applyForm.reset();
+        const fs = document.getElementById('file-selected');
+        if (fs) fs.textContent = 'Geen bestand gekozen';
+
+        // Notify the carousel module to close the modal
+        document.dispatchEvent(new CustomEvent('apply-modal:close'));
+
+        // Reset success state for next submission (after fade-out)
+        setTimeout(() => {
+          if (successEl) {
+            successEl.classList.remove('show');
+            successEl.hidden = true;
+          }
+        }, 600);
+      }, 1500);
     });
   }
 
-  // Job apply buttons → scroll to form + prefill
-  document.querySelectorAll('.job-apply-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const jobName = btn.dataset.job;
-      const positionInput = document.getElementById('apply-position');
-      const jobNameSpan = document.getElementById('apply-job-name');
-      if (positionInput) positionInput.value = jobName;
-      if (jobNameSpan) jobNameSpan.textContent = `— ${jobName}`;
-      const wrap = document.getElementById('apply-form-wrap');
-      if (wrap) {
-        gsap.to(window, {
-          duration: 1,
-          scrollTo: { y: wrap, offsetY: 100 },
-          ease: 'power3.inOut'
-        });
-        // Flash the form border
-        gsap.from(wrap, {
-          boxShadow: '0 0 0 3px rgba(124,92,191,0.4)',
-          duration: 0.6,
-          ease: 'power2.out',
-          delay: 0.9
-        });
-      }
-    });
-  });
+  // (Job apply buttons are wired by initJobCarousel; modal handles prefill + flip.)
 
   // File input display
   const cvInput = document.getElementById('af-cv');
@@ -595,6 +590,266 @@ function showToast(message, type = 'default') {
       onComplete: () => toast.classList.remove('show', 'success')
     });
   }, 4000);
+}
+
+// ═══════════════════════════════════════════
+// JOB CAROUSEL — liquid-glass + flip-to-modal
+// ═══════════════════════════════════════════
+function initJobCarousel() {
+  const section   = document.getElementById('join-team');
+  const carousel  = document.getElementById('job-carousel');
+  const track     = document.getElementById('carousel-track');
+  if (!section || !carousel || !track) return;
+
+  const cards     = Array.from(track.querySelectorAll('.job-card'));
+  if (!cards.length) return;
+
+  const prevBtn   = document.getElementById('carousel-prev');
+  const nextBtn   = document.getElementById('carousel-next');
+  const counter   = document.getElementById('carousel-counter');
+  const liveEl    = document.getElementById('carousel-live');
+  const badgeEl   = document.getElementById('carousel-badge');
+  const total     = cards.length;
+
+  const modal       = document.getElementById('apply-modal');
+  const modalCard   = document.getElementById('apply-modal-card');
+  const modalClose  = document.getElementById('apply-modal-close');
+  const modalBackdrop = document.getElementById('apply-modal-backdrop');
+  const positionInput = document.getElementById('apply-position');
+  const jobNameSpan   = document.getElementById('apply-job-name');
+
+  let activeIndex = 0;
+  let isModalOpen = false;
+  let currentFlippedCard = null;
+  let lastFocusedBeforeModal = null;
+
+  function updatePositions() {
+    cards.forEach((card, i) => {
+      const offset = ((i - activeIndex) % total + total) % total;
+      // map offset → position label (relative to active)
+      let pos = 'hidden';
+      if (offset === 0) pos = 'center';
+      else if (offset === 1) pos = 'right';
+      else if (offset === total - 1) pos = 'left';
+      else if (offset === 2) pos = 'far-right';
+      else if (offset === total - 2) pos = 'far-left';
+      card.dataset.position = pos;
+      card.setAttribute('aria-hidden', pos === 'center' ? 'false' : 'true');
+    });
+
+    // counter
+    if (counter) counter.textContent = `${activeIndex + 1} / ${total}`;
+
+    // badge
+    const centerCard = cards[activeIndex];
+    const badgeText  = centerCard?.dataset.badge;
+    if (badgeEl) {
+      badgeEl.classList.remove('show', 'is-nieuw', 'is-urgent');
+      if (badgeText) {
+        badgeEl.textContent = badgeText;
+        badgeEl.hidden = false;
+        if (badgeText.toLowerCase() === 'nieuw') badgeEl.classList.add('is-nieuw');
+        else if (badgeText.toLowerCase() === 'urgent') badgeEl.classList.add('is-urgent');
+        // double-rAF to ensure transition runs
+        requestAnimationFrame(() => requestAnimationFrame(() => badgeEl.classList.add('show')));
+      } else {
+        badgeEl.hidden = true;
+      }
+    }
+
+    // live region
+    if (liveEl && centerCard) {
+      liveEl.textContent = `Vacature ${activeIndex + 1} van ${total}: ${centerCard.dataset.job}`;
+    }
+  }
+
+  function goTo(index) {
+    activeIndex = ((index % total) + total) % total;
+    updatePositions();
+  }
+  function next() { goTo(activeIndex + 1); }
+  function prev() { goTo(activeIndex - 1); }
+
+  // Click on a side card → bring it to center
+  cards.forEach((card, i) => {
+    card.addEventListener('click', (e) => {
+      // Apply button click on centered card → open modal (handled below)
+      if (e.target.closest('.job-apply-btn')) return;
+      if (i === activeIndex) return;
+      goTo(i);
+    });
+  });
+
+  // Apply buttons → open modal (only fires from centered card thanks to CSS pointer-events)
+  cards.forEach((card) => {
+    const btn = card.querySelector('.job-apply-btn');
+    if (!btn) return;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openModal(card);
+    });
+  });
+
+  // Nav buttons
+  if (prevBtn) prevBtn.addEventListener('click', prev);
+  if (nextBtn) nextBtn.addEventListener('click', next);
+
+  // Keyboard navigation when section is focused / hovered
+  function handleKey(e) {
+    if (isModalOpen) {
+      if (e.key === 'Escape') { e.preventDefault(); closeModal(); }
+      return;
+    }
+    // Only react when carousel or section is in viewport AND focus is inside
+    if (!section.contains(document.activeElement) && !carousel.matches(':hover')) return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+  }
+  document.addEventListener('keydown', handleKey);
+
+  // Touch / swipe via Draggable on a proxy element
+  if (typeof Draggable !== 'undefined') {
+    const proxy = document.createElement('div');
+    proxy.style.position = 'absolute';
+    proxy.style.inset = '0';
+    proxy.style.zIndex = '3';
+    proxy.style.background = 'transparent';
+    proxy.style.cursor = 'grab';
+    track.appendChild(proxy);
+
+    let startX = 0;
+    Draggable.create(proxy, {
+      type: 'x',
+      inertia: false,
+      onPress(e) { startX = this.x; proxy.style.cursor = 'grabbing'; },
+      onRelease() {
+        proxy.style.cursor = 'grab';
+        const dx = this.x - startX;
+        gsap.set(proxy, { x: 0 });
+        if (dx < -40) next();
+        else if (dx > 40) prev();
+      },
+      allowEventDefault: false
+    });
+
+    // Make sure clicks on cards still bubble: stop the Draggable from
+    // hijacking clicks when there was no drag. We also let underlying
+    // elements receive pointer events when dragging hasn't started.
+    proxy.addEventListener('click', (e) => {
+      // Forward the click to whatever is under the cursor
+      proxy.style.pointerEvents = 'none';
+      const below = document.elementFromPoint(e.clientX, e.clientY);
+      proxy.style.pointerEvents = '';
+      if (below && below !== proxy) {
+        below.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, clientX: e.clientX, clientY: e.clientY }));
+      }
+    });
+  }
+
+  // ── MODAL OPEN / CLOSE with Flip ────────────────────────────────────────
+  function openModal(card) {
+    if (isModalOpen) return;
+    const jobName = card.dataset.job;
+    if (positionInput) positionInput.value = jobName;
+    if (jobNameSpan) jobNameSpan.textContent = `— ${jobName}`;
+
+    isModalOpen = true;
+    currentFlippedCard = card;
+    lastFocusedBeforeModal = document.activeElement;
+
+    // Mark and show modal
+    modal.hidden = false;
+    requestAnimationFrame(() => {
+      modal.classList.add('is-open');
+    });
+
+    // Add a flip class to the source card for visual continuity
+    card.classList.add('is-flipping');
+
+    // Animate the modal card in (flip + scale). We use a simple GSAP timeline
+    // because Flip on a fixed-positioned modal of different markup is brittle.
+    if (PREFERS_REDUCED_MOTION) {
+      gsap.set(modalCard, { opacity: 1, scale: 1, rotationY: 0 });
+    } else {
+      gsap.fromTo(modalCard,
+        { opacity: 0, scale: 0.85, rotationY: -90, transformPerspective: 1200 },
+        { opacity: 1, scale: 1, rotationY: 0, duration: 0.65, ease: 'power3.out' }
+      );
+    }
+
+    // Lock scroll
+    document.body.style.overflow = 'hidden';
+
+    // Focus management
+    setTimeout(() => {
+      const firstField = modal.querySelector('input, textarea, button');
+      if (firstField) firstField.focus();
+    }, 100);
+
+    document.addEventListener('keydown', trapFocus);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+  }
+
+  function closeModal() {
+    if (!isModalOpen) return;
+
+    const finish = () => {
+      modal.classList.remove('is-open');
+      modal.hidden = true;
+      document.body.style.overflow = '';
+      if (currentFlippedCard) currentFlippedCard.classList.remove('is-flipping');
+      currentFlippedCard = null;
+      isModalOpen = false;
+      document.removeEventListener('keydown', trapFocus);
+      if (modalBackdrop) modalBackdrop.removeEventListener('click', closeModal);
+      if (lastFocusedBeforeModal && lastFocusedBeforeModal.focus) lastFocusedBeforeModal.focus();
+    };
+
+    if (PREFERS_REDUCED_MOTION) { finish(); return; }
+
+    gsap.to(modalCard, {
+      opacity: 0,
+      scale: 0.85,
+      rotationY: 90,
+      duration: 0.5,
+      ease: 'power3.in',
+      onComplete: finish
+    });
+  }
+
+  // Focus trap inside modal
+  function trapFocus(e) {
+    if (e.key !== 'Tab') return;
+    const focusables = modal.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last  = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  if (modalClose) modalClose.addEventListener('click', closeModal);
+  document.addEventListener('apply-modal:close', closeModal);
+
+  // Initial state FIRST — so data-position transforms are applied before any animation
+  updatePositions();
+
+  // ── Scroll reveal ───────────────────────────────────────────────────────
+  // Animate the inner element (which does NOT carry position transforms),
+  // so the carousel's data-position offsets on .job-card remain intact.
+  if (!PREFERS_REDUCED_MOTION) {
+    const inners = cards.map(c => c.querySelector('.job-card-inner')).filter(Boolean);
+    gsap.from(inners, {
+      scrollTrigger: { trigger: section, start: 'top 75%', once: true },
+      opacity: 0,
+      scale: 0.9,
+      duration: 0.7,
+      stagger: 0.08,
+      ease: 'power3.out'
+    });
+  }
 }
 
 // ═══════════════════════════════════════════
