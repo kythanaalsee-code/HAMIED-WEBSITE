@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initQuiz();
   initForms();
   initJobCarousel();
+  initLocationDetailPage();
   initMobileNav();
   initHeroMedia();
   initHeroAnimations();
@@ -152,6 +153,8 @@ function initMobileNav() {
 // HERO ANIMATIONS
 // ═══════════════════════════════════════════
 function initHeroAnimations() {
+  if (!document.querySelector('.hero-section')) return;
+
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
   tl.from('.hero-eyebrow', { opacity: 0, y: 20, duration: 0.8, delay: 0.3 })
@@ -348,6 +351,8 @@ function initQuiz() {
   const stepLabel = document.getElementById('quiz-step-label');
   const dots = document.querySelectorAll('.quiz-dot');
   const quizNav = document.getElementById('quiz-nav');
+  if (!slides.length || !resultSlide || !prevBtn || !nextBtn || !progressBar || !stepLabel || !quizNav) return;
+
   const totalSteps = slides.length;
 
   let currentStep = 0;
@@ -850,6 +855,84 @@ function initJobCarousel() {
       ease: 'power3.out'
     });
   }
+}
+
+// ═══════════════════════════════════════════
+// LOCATION DETAIL PAGES — service carousel + reveal motion
+// ═══════════════════════════════════════════
+function initLocationDetailPage() {
+  const page = document.querySelector('.location-detail-page');
+  if (!page) return;
+
+  const track = page.querySelector('.loc-services-track');
+  const prevBtn = page.querySelector('.loc-service-prev');
+  const nextBtn = page.querySelector('.loc-service-next');
+
+  const scrollServices = (direction) => {
+    if (!track) return;
+    const firstCard = track.querySelector('.loc-service-card');
+    const cardWidth = firstCard ? firstCard.getBoundingClientRect().width : 280;
+    track.scrollBy({
+      left: direction * (cardWidth + 24),
+      behavior: PREFERS_REDUCED_MOTION ? 'auto' : 'smooth'
+    });
+  };
+
+  if (prevBtn) prevBtn.addEventListener('click', () => scrollServices(-1));
+  if (nextBtn) nextBtn.addEventListener('click', () => scrollServices(1));
+
+  if (track) {
+    track.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); scrollServices(1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); scrollServices(-1); }
+    });
+
+    if (typeof Draggable !== 'undefined') {
+      Draggable.create(track, {
+        type: 'scrollLeft',
+        edgeResistance: 0.85,
+        inertia: false,
+        allowContextMenu: true
+      });
+    }
+  }
+
+  const reveal = (targets, vars = {}) => {
+    const elements = gsap.utils.toArray(targets);
+    if (!elements.length) return;
+
+    if (PREFERS_REDUCED_MOTION) {
+      gsap.from(elements, {
+        scrollTrigger: { trigger: elements[0], start: 'top 88%', once: true },
+        opacity: 0,
+        duration: 0.4,
+        stagger: 0.05,
+        ease: 'power1.out'
+      });
+      return;
+    }
+
+    gsap.from(elements, {
+      scrollTrigger: { trigger: elements[0], start: 'top 84%', once: true },
+      opacity: 0,
+      y: 34,
+      duration: 0.75,
+      stagger: 0.08,
+      ease: 'power3.out',
+      ...vars
+    });
+  };
+
+  if (!PREFERS_REDUCED_MOTION) {
+    gsap.from('.location-hero-frame', { opacity: 0, y: 26, scale: 0.96, duration: 0.9, ease: 'power3.out' });
+    gsap.from('.location-hero-copy > *', { opacity: 0, y: 24, duration: 0.75, stagger: 0.08, ease: 'power3.out', delay: 0.15 });
+  } else {
+    gsap.from('.location-hero-frame, .location-hero-copy > *', { opacity: 0, duration: 0.4, stagger: 0.04 });
+  }
+
+  reveal('.loc-summary-copy, .loc-summary-visual, .loc-summary-highlights', { y: 28 });
+  reveal('.loc-service-card', { y: 40 });
+  reveal('.loc-room-gallery > *, .loc-room-copy, .loc-included-card', { y: 32 });
 }
 
 // ═══════════════════════════════════════════

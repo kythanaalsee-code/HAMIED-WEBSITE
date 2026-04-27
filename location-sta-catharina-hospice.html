@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="nl" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hamiëd Sta.Catharina Hospice — Stichting Hamiëd</title>
+  <meta name="description" content="Ontdek Hamiëd Sta.Catharina Hospice aan Kaya Ypsea 64 op Curaçao." />
+  <link href="https://api.fontshare.com/v2/css?f[]=cormorant@300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Flip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
+  <link rel="stylesheet" href="style.css?v=11" />
+</head>
+<body>
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="index.html#hero" class="logo-link" aria-label="Stichting Hamiëd — naar de startpagina"><img class="logo-svg" src="assets/images/splash.png" alt="Stichting Hamiëd logo" /><div class="logo-text"><span class="logo-title">Stichting Hamiëd</span><span class="logo-sub">Health Elderly &amp; Palliative Care</span></div></a>
+      <nav class="main-nav" aria-label="Hoofdnavigatie"><a class="nav-link" href="index.html#locations" data-section="locations">Locaties</a><a class="nav-link" href="index.html#services" data-section="services">Onze diensten</a><a class="nav-link" href="index.html#care-quiz" data-section="care-quiz">Juiste zorg</a><a class="nav-link" href="index.html#contact" data-section="contact">Contact</a><a class="nav-link" href="index.html#join-team" data-section="join-team">Word collega</a><a class="nav-link" href="index.html#about" data-section="about">Over ons</a><a class="nav-link nav-donate" href="index.html#donate" data-section="donate">Doneer</a></nav>
+      <button class="nav-hamburger" aria-label="Menu openen" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <div class="mobile-nav" aria-hidden="true"><a class="nav-link" href="index.html#locations">Locaties</a><a class="nav-link" href="index.html#services">Onze diensten</a><a class="nav-link" href="index.html#care-quiz">Juiste zorg</a><a class="nav-link" href="index.html#contact">Contact</a><a class="nav-link" href="index.html#join-team">Word collega</a><a class="nav-link" href="index.html#about">Over ons</a><a class="nav-link nav-donate" href="index.html#donate">Doneer</a></div>
+
+  <main class="location-detail-page" style="--loc-hero-image: url('assets/images/stahloc.png'); --loc-soft: #f8eef1;">
+    <section id="location-hero" class="location-detail-hero" aria-labelledby="location-title">
+      <div class="location-hero-shell">
+        <a class="location-back-button" style="position:fixed;top:96px;left:24px;z-index:1200;" href="index.html#locations" onclick="window.location.href='index.html#locations'; return false;">← Terug naar locaties</a>
+        <div class="location-hero-frame">
+          <div class="location-hero-copy">
+            <p class="location-hero-kicker">Hospice · Sta.Catharina</p>
+            <h1 id="location-title" class="location-hero-title">Hamiëd Sta.Catharina Hospice</h1>
+            <p class="location-hero-address">Kaya Ypsea 64, Curaçao</p>
+            <div class="location-hero-pills" aria-label="Locatie eigenschappen"><span class="location-hero-pill">Palliatieve zorg</span><span class="location-hero-pill">Comfortzorg</span><span class="location-hero-pill">Familiebegeleiding</span></div>
+            <div class="location-hero-actions"><a class="location-action primary" href="index.html#contact">Neem contact op ↗</a><a class="location-action secondary" href="#rooms">Bekijk kamers ↓</a></div>
+          </div>
+          <div class="location-stat-stack" aria-label="Kerngegevens"><div class="location-stat-card"><strong>24/7</strong><span>Comfortgerichte zorg en nabijheid</span></div><div class="location-stat-card"><strong>1</strong><span>Rustige hospiceomgeving</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="overview" class="location-detail-summary" aria-labelledby="overview-title">
+      <div class="loc-summary-grid">
+        <div class="loc-summary-copy"><p class="loc-section-kicker">Over deze locatie</p><h2 id="overview-title">Een zachte, waardige omgeving voor hospicezorg.</h2><p>Hamiëd Sta.Catharina Hospice richt zich op rust, comfort en menselijkheid in de laatste levensfase. Deze placeholdertekst kan later worden vervangen door precieze informatie over de hospicevoorzieningen.</p></div>
+        <div class="loc-summary-visual"><img src="https://picsum.photos/seed/hamied-sta-catharina-hospice-summary/700/880" alt="Sfeerbeeld van een rustige hospiceomgeving" /></div>
+        <div class="loc-summary-highlights"><div class="loc-highlight-card"><h3>24-uurszorg</h3><p>Altijd nabijheid van zorgprofessionals met aandacht voor comfort.</p></div><div class="loc-highlight-card"><h3>Persoonlijke begeleiding</h3><p>Zorg afgestemd op de wensen van cliënt en familie.</p></div><div class="loc-highlight-card"><h3>Rustige omgeving</h3><p>Een kalme setting met ruimte voor afscheid en samenzijn.</p></div><div class="loc-highlight-card"><h3>Familiaire sfeer</h3><p>Betrokken begeleiding voor naasten en dierbaren.</p></div></div>
+      </div>
+    </section>
+
+    <section id="services" class="location-services-strip" aria-labelledby="services-title">
+      <div class="loc-services-header"><div><p class="loc-section-kicker">Beschikbare zorg</p><h2 id="services-title">Services op deze locatie</h2></div><div class="loc-carousel-controls" aria-label="Service carousel bediening"><button class="loc-service-control loc-service-prev" type="button" aria-label="Vorige service">←</button><button class="loc-service-control loc-service-next" type="button" aria-label="Volgende service">→</button></div></div>
+      <div class="loc-services-track" style="display:flex; flex-direction:row; flex-wrap:nowrap; overflow-x:auto;" tabindex="0" role="list" aria-label="Services beschikbaar bij Hamiëd Sta.Catharina Hospice">
+        <article class="loc-service-card" role="listitem"><span class="loc-service-icon">✚</span><h3>24-uurs verpleging</h3><p>Continue verpleegkundige aandacht voor bewoners met intensieve zorgvragen.</p></article><article class="loc-service-card" role="listitem"><span class="loc-service-icon">♡</span><h3>Palliatieve zorg</h3><p>Comfortgerichte begeleiding met aandacht voor rust, waardigheid en familie.</p></article><article class="loc-service-card" role="listitem"><span class="loc-service-icon">☀</span><h3>Dagelijkse verzorging</h3><p>Ondersteuning bij persoonlijke verzorging, ritme en dagelijkse handelingen.</p></article><article class="loc-service-card" role="listitem"><span class="loc-service-icon">●</span><h3>Medicatiebegeleiding</h3><p>Zorgvuldige begeleiding bij medicatie, observatie en opvolging.</p></article><article class="loc-service-card" role="listitem"><span class="loc-service-icon">✦</span><h3>Activiteitenprogramma</h3><p>Sociale, creatieve en rustige activiteiten passend bij de bewoners.</p></article><article class="loc-service-card" role="listitem"><span class="loc-service-icon">∞</span><h3>Familiebegeleiding</h3><p>Heldere communicatie en ondersteuning voor naasten.</p></article>
+      </div>
+    </section>
+
+    <section id="rooms" class="location-rooms-section" aria-labelledby="rooms-title">
+      <div class="loc-rooms-grid">
+        <div class="loc-room-copy"><p class="loc-section-kicker">Kamers &amp; omgeving</p><h2 id="rooms-title">Ruimtes voor comfort, privacy en nabijheid.</h2><p>Stockbeelden vullen tijdelijk de kamer- en locatiebeelden aan. De sectie is voorbereid voor echte hospicefoto’s zodra die beschikbaar zijn.</p><div class="loc-included-grid" aria-label="Alles inbegrepen"><span class="loc-included-card">Comfortabel zorgbed</span><span class="loc-included-card">Eigen kastruimte</span><span class="loc-included-card">Airconditioning</span><span class="loc-included-card">Dagelijkse maaltijden</span><span class="loc-included-card">Verpleegkundige ondersteuning</span><span class="loc-included-card">Gemeenschappelijke woonruimte</span><span class="loc-included-card">Bezoekmogelijkheden</span><span class="loc-included-card">Activiteiten en begeleiding</span></div></div>
+        <div class="loc-room-gallery"><figure><img src="https://picsum.photos/seed/stah-private-room/900/620" alt="Stockfoto van een private kamer" /></figure><figure><img src="https://picsum.photos/seed/stah-living-room/520/420" alt="Stockfoto van een gemeenschappelijke woonruimte" /></figure><figure><img src="https://picsum.photos/seed/stah-bathroom/520/420" alt="Stockfoto van een toegankelijke badkamer" /></figure><figure><img src="https://picsum.photos/seed/stah-garden/520/420" alt="Stockfoto van een rustige buitenruimte" /></figure><figure><img src="https://picsum.photos/seed/stah-dining/520/420" alt="Stockfoto van een eet- en activiteitenruimte" /></figure><figure><img src="https://picsum.photos/seed/stah-nursing/900/620" alt="Stockfoto van een zorgondersteunende ruimte" /></figure></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><img class="logo-svg" src="assets/images/splash.png" alt="Stichting Hamiëd logo" /><div><p class="footer-name">Stichting Hamiëd</p><p class="footer-tagline">Health Elderly &amp; Palliative Care</p></div></div><div class="footer-links"><div class="footer-col"><h5>Navigatie</h5><a href="index.html#locations">Locaties</a><a href="index.html#services">Onze diensten</a><a href="index.html#contact">Contact</a></div><div class="footer-col"><h5>Contact</h5><a href="mailto:info@hamied.cw">info@hamied.cw</a><a href="tel:+59999XXXXXXX">+599 9 XXX XXXX</a><p>Curaçao, Dutch Caribbean</p></div></div></div><div class="footer-bottom"><p>© 2025 Stichting Hamiëd. Alle rechten voorbehouden.</p><div class="footer-bottom-links"><a href="#">Privacybeleid</a><a href="#">Cookiebeleid</a></div></div></footer>
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+  <script src="script.js?v=5"></script>
+</body>
+</html>
